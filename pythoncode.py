@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import tweepy
 import sys
+import csv 
 import json
 # For plotting and visualization:
 from IPython.display import display
@@ -26,6 +27,7 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
 
 api = tweepy.API(auth)
+
 
 tweets = api.search(sys.argv[1])
 #tweets = api.search("\"Data Localization\"")
