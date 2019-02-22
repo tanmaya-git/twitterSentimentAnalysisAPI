@@ -90,7 +90,14 @@ console.log(req.files.file.name);
         for (let item of globals.fetchdata){
           console.log(item);
     var spawn = require("child_process").spawn;
-    var process = spawn('python2.7',["./pythoncode.py", item] );}
+    var process = spawn('python2.7',["./pythoncode.py", item] );
+//     process.stdout.on('data', function(data) {
+//       res.send(data.toString());
+//   } )
+//   process.stderr.on("data", function(data) {
+//     console.log('stderr: ' + data);
+// } )
+  }
     process.stdout.on('data', function(data) {
         res.send(data.toString());
     } )

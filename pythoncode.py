@@ -28,7 +28,7 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
 
 api = tweepy.API(auth)
 
-
+#for tweet in sys.argv[1]
 tweets = api.search(sys.argv[1])
 #tweets = api.search("\"Data Localization\"")
 
