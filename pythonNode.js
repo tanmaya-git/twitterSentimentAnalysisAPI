@@ -43,6 +43,9 @@ app.use(
   
   
   app.post("/argsPython", function(req, res) {
+    if(req.body.question != null){
+      globals.keycount = true;
+    }
      globals.keyword = req.body.question;
       console.log("Keyword is", globals.keyword);
     });
@@ -50,17 +53,14 @@ app.use(
     app.use(fileupload())   ;
 app.post("/file", function(req, res) {
   var file;
-  // console.log(req.files);
-//   let uploadFile = req.files[0];
-//   // const fileName = req.files[0].name;
-//   // console.log(uploadFile);
-//  console.log(uploadFile);
 
 if(!req.files)
     {
         res.send("File was not found");
+        globals.filecount =false;
         return;
     }
+    globals.filecount =true;
     globals.csvfile = req.files;
 console.log(req.files.file.name);
     res.send("File Uploaded");
@@ -85,8 +85,20 @@ console.log(req.files.file.name);
  
 
     app.get('/pythonscript', (req, res) => {
+      if ( globals.keycount == true)
+      {
         var obj = globals.keyword;
-        console.log(obj);
+        console.log(obj); 
+    var spawn = require("child_process").spawn;
+    var process = spawn('python2.7',["./pythoncode.py", obj] );
+    process.stdout.on('data', function(data) {
+        res.send(data.toString());
+    } )
+    process.stderr.on("data", function(data) {
+      console.log('stderr: ' + data);
+  } )
+      }
+       else if (globals.fetchdata != null){
         for (let item of globals.fetchdata){
           console.log(item);
     var spawn = require("child_process").spawn;
@@ -104,7 +116,10 @@ console.log(req.files.file.name);
     process.stderr.on("data", function(data) {
       console.log('stderr: ' + data);
   } )
-
+       }
+       else {
+         console.log('No Item is entered');
+       }
 });
 
 
