@@ -50,6 +50,17 @@ app.use(
       });
     });
   });
+
+  app.get('/globalchart', (req, res) => {
+    con.connect(function(err) {
+      
+      con.query("SELECT Location, RTs, SA FROM twitter ORDER BY RTs DESC LIMIT 10", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+        res.send(result);
+      });
+    });
+  });
   
   
   app.post("/argsPython", function(req, res) {
